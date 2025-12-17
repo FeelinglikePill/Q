@@ -396,3 +396,57 @@ task.spawn(function()
         end
     end
 end)
+
+------------------------------------------------
+-- SilentAim Team Filter (รวม Dropdown + GetTarget)
+------------------------------------------------
+
+-- ทีมที่เลือกให้ SilentAim ล็อค
+local SilentAimTeam = nil
+-- nil = ไม่ล็อค
+-- "Guards" / "Criminals" / "Inmates"
+
+-- Dropdown เลือกทีม
+CombatTab:Dropdown({
+    Title = "SilentAim Team",
+    Description = "Select team to lock",
+    Values = {
+        "Guards",
+        "Criminals",
+        "Inmates"
+    },
+    Default = nil,
+    Callback = function(v)
+        SilentAimTeam = v
+    end
+})
+
+-- GetTarget (เช็กทีม + FOV)
+local function GetTarget()
+    if not SilentAimTeam then return nil end
+
+    local closest, bestDist = nil, math.huge
+    local center = Camera.ViewportSize / 2
+
+    for _, plr in ipairs(Players:GetPlayers()) do
+        if plr ~= LocalPlayer
+        and plr.Team
+        and plr.Team.Name == SilentAimTeam
+        and plr.Character
+        and plr.Character:FindFirstChild("Head") then
+
+            local head = plr.Character.Head
+            local pos, onScreen = Camera:WorldToViewportPoint(head.Position)
+
+            if onScreen then
+                local dist = (Vector2.new(pos.X, pos.Y) - center).Magnitude
+                if dist <= FOVRadius and dist < bestDist then
+                    bestDist = dist
+                    closest = head
+                end
+            end
+        end
+    end
+
+    return closest
+end
