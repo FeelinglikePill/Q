@@ -298,3 +298,97 @@ end
 end
 end
 end)
+
+------------------------------------------------
+-- Teleport
+------------------------------------------------
+TeleportTab:Button({
+    Title = "TP to Tower",
+    Callback = function()
+        local char = LocalPlayer.Character
+        local hrp = char and char:FindFirstChild("HumanoidRootPart")
+
+        if hrp then
+            hrp.CFrame = CFrame.new(
+                822.47509765625,
+                139.43064880371094,
+                2​588.803466796875
+            )
+        end
+    end
+})
+
+------------------------------------------------
+-- Teleport
+------------------------------------------------
+TeleportTab:Button({
+    Title = "tp to the thief's",
+    Callback = function()
+        local char = LocalPlayer.Character
+        local hrp = char and char:FindFirstChild("HumanoidRootPart")
+
+        if hrp then
+            hrp.CFrame = CFrame.new(
+                -977.0906982421875,
+                109.65302276611328,
+                2056.8154296875
+            )
+        end
+    end
+})
+
+------------------------------------------------
+-- TP ไปจุดนี้ แล้วกลับที่เดิม
+------------------------------------------------
+TeleportTab:Button({
+    Title = "TP to mp5",
+    Callback = function()
+        local char = LocalPlayer.Character
+        local hrp = char and char:FindFirstChild("HumanoidRootPart")
+        if not hrp then return end
+
+        -- เก็บตำแหน่งเดิม
+        local oldCFrame = hrp.CFrame
+
+        -- TP ไปจุดเป้า
+        hrp.CFrame = CFrame.new(
+            813.44921875,
+            99.18183135986328,
+            2229.074462890625
+        )
+
+        -- หน่วงเวลา (วินาที) แล้ววาปกลับ
+        task.wait(1) -- ปรับเวลาได้ เช่น 0.5 / 2 / 3
+
+        -- วาปกลับตำแหน่งเดิม
+        hrp.CFrame = oldCFrame
+    end
+})
+
+------------------------------------------------
+-- TP ไปจุดนี้ แล้วกลับที่เดิม (821)
+------------------------------------------------
+TeleportTab:Button({
+    Title = "TP to remington",
+    Callback = function()
+        local char = LocalPlayer.Character
+        local hrp = char and char:FindFirstChild("HumanoidRootPart")
+        if not hrp then return end
+
+        -- เก็บตำแหน่งเดิม
+        local oldCFrame = hrp.CFrame
+
+        -- TP ไปจุดเป้า
+        hrp.CFrame = CFrame.new(
+            821.404541015625,
+            98.10057830810547,
+            2228.724853515625
+        )
+
+        -- เวลาที่อยู่จุดนั้น (วินาที)
+        task.wait(1)
+
+        -- วาปกลับ
+        hrp.CFrame = oldCFrame
+    end
+})
