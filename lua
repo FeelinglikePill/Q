@@ -85,28 +85,6 @@ CombatTab:Slider({
     end
 })
 
-------------------------------------------------
--- Target
-------------------------------------------------
-local function GetTarget()
-    local closest, bestDist = nil, math.huge
-    local center = Camera.ViewportSize / 2
-
-    for _, plr in ipairs(Players:GetPlayers()) do
-        if plr ~= LocalPlayer and plr.Character and plr.Character:FindFirstChild("Head") then
-            local head = plr.Character.Head
-            local pos, onScreen = Camera:WorldToViewportPoint(head.Position)
-            if onScreen then
-                local dist = (Vector2.new(pos.X,pos.Y) - center).Magnitude
-                if dist <= FOVRadius and dist < bestDist then
-                    bestDist = dist
-                    closest = head
-                end
-            end
-        end
-    end
-    return closest
-end
 
 ------------------------------------------------
 -- SilentAim (ของเดิม)
