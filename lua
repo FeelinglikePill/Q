@@ -354,3 +354,48 @@ TeleportTab:Button({
         hrp.CFrame = oldCFrame
     end
 })
+
+-- Arrest Aura
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local LocalPlayer = Players.LocalPlayer
+
+local ArrestRemote = ReplicatedStorage
+    :WaitForChild("Remotes")
+    :WaitForChild("ArrestPlayer")
+
+local ArrestAuraEnabled = false
+local DISTANCE = 10 -- ปรับระยะได้
+
+CombatTab:Toggle({
+    Title = "arrest aura",
+    Description = "Only the police",
+    Default = false,
+    Callback = function(state)
+        ArrestAuraEnabled = state
+    end
+})
+
+task.spawn(function()
+    while task.wait(0.2) do
+        if not ArrestAuraEnabled then continue end
+
+        local char = LocalPlayer.Character
+        local hrp = char and char:FindFirstChild("HumanoidRootPart")
+        if not hrp then continue end
+
+        for _, plr in pairs(Players:GetPlayers()) do
+            if plr ~= LocalPlayer and plr.Character then
+                local thrp = plr.Character:FindFirstChild("HumanoidRootPart")
+                if thrp then
+                    local dist = (hrp.Position - thrp.Position).Magnitude
+                    if dist <= DISTANCE then
+                        pcall(function()
+                            ArrestRemote:InvokeServer(plr)
+                        end)
+                    end
+                end
+            end
+        end
+    end
+end)
