@@ -356,9 +356,6 @@ TeleportTab:Button({
 })
 
 -- Arrest Aura
-local Players = game:GetService("Players")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local LocalPlayer = Players.LocalPlayer
 
 local ArrestRemote = ReplicatedStorage
     :WaitForChild("Remotes")
